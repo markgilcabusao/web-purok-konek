@@ -59,7 +59,7 @@ function toggleTheme() {
                     class="white--text mb-2"
                   >
                     <router-link to="/main" class="text-decoration-none">
-                      <p class="text-white">Log in</p>
+                      <p class="text-center text-white">Log in</p>
                     </router-link>
                   </v-btn>
                 </v-form>
