@@ -60,7 +60,9 @@ function onClick() {
                     density="comfortable"
                   />
                   <v-btn type="submit" block color="green-darken-3" class="signup white--text mb-2">
-                    Sign Up
+                    <router-link to="/" class="text-decoration-none">
+                      <p class="text-white">Sign Up</p>
+                    </router-link>
                   </v-btn>
                 </v-form>
                 <router-link to="/" class="text-decoration-none">
