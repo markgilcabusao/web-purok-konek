@@ -13,7 +13,7 @@ function toggleTheme() {
     <v-app :theme="theme">
       <!-- Top Bar -->
       <v-app-bar color="green-darken-3" class="px-3">
-        <v-spacer></v-spacer>
+        <v-spacer><h2>PUROK-KONEK</h2></v-spacer>
         <v-btn
           :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
           text=""
