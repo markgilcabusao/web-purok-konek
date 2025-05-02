@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 
+const visible = ref(false)
+
 const theme = ref('light')
 
 function onClick() {
@@ -55,9 +57,12 @@ function onClick() {
                   <v-text-field label="Email" variant="outlined" density="comfortable" />
                   <v-text-field
                     label="Password"
-                    type="password"
-                    variant="outlined"
+                    :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                    :type="visible ? 'text' : 'password'"
                     density="comfortable"
+                    placeholder="Enter your password"
+                    variant="outlined"
+                    @click:append-inner="visible = !visible"
                   />
                   <v-btn type="submit" block color="green-darken-3" class="signup white--text mb-2">
                     <router-link to="/" class="text-decoration-none">

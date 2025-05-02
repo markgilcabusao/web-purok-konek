@@ -23,5 +23,4 @@ function toggleTheme() {
     </v-app>
   </v-responsive>
 </template>
-
 <style scoped></style>

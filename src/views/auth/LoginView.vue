@@ -1,6 +1,11 @@
 <script setup>
 import { ref } from 'vue'
 
+const email = ref('')
+const emailRule = (value) => value.includes('@') || 'Email must contain @'
+
+const visible = ref(false)
+
 const theme = ref('light')
 
 function toggleTheme() {
@@ -35,34 +40,43 @@ function toggleTheme() {
 
             <!-- Right Section -->
             <v-col cols="12" md="4">
-              <v-card class="pa-4" elevation="8">
-                <v-form @submit.prevent>
-                  <h1 class="text-center">Welcome back!</h1>
-                  <p class="text-center">We're so excited to see you again!</p>
-                  <br />
-                  <v-text-field
-                    label="Email or phone number"
-                    variant="outlined"
-                    density="comfortable"
-                  />
-                  <v-text-field
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    density="comfortable"
-                  />
-                  <v-btn
-                    type="submit"
-                    block
-                    color="green-darken-3
-"
-                    class="white--text mb-2"
-                  >
-                    <router-link to="/main" class="text-decoration-none">
-                      <p class="text-center text-white">Log in</p>
-                    </router-link>
-                  </v-btn>
-                </v-form>
+              <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+                <h1 class="text-center">Welcome back!</h1>
+                <p class="text-center">We're so excited to see you again!</p>
+                <br />
+                <div class="text-subtitle-1 text-medium-emphasis">Email</div>
+
+                <v-text-field
+                  v-model="email"
+                  density="compact"
+                  placeholder="Email address"
+                  prepend-inner-icon="mdi-email-outline"
+                  variant="outlined"
+                  :rules="[emailRule]"
+                  error-messages=""
+                ></v-text-field>
+
+                <div
+                  class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+                >
+                  Password
+                </div>
+
+                <v-text-field
+                  :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                  :type="visible ? 'text' : 'password'"
+                  density="compact"
+                  placeholder="Enter your password"
+                  prepend-inner-icon="mdi-lock-outline"
+                  variant="outlined"
+                  @click:append-inner="visible = !visible"
+                ></v-text-field>
+
+                <v-btn type="submit" block color="green-darken-3" class="signup white--text mb-2">
+                  <router-link to="/main" class="text-decoration-none">
+                    <p class="text-center text-white">Log in</p>
+                  </router-link>
+                </v-btn>
                 <router-link to="/register" class="text-decoration-none">
                   <p class="text-center green--text">Create new account</p>
                 </router-link>
