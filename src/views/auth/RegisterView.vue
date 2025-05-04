@@ -43,7 +43,7 @@ const onFormSubmit = () => {
 
 <template>
   <v-responsive>
-    <v-app :theme="theme">
+    <v-app :theme="theme" class="main-page"> <!-- Added class here -->
       <!-- Top Bar -->
       <v-app-bar color="green-darken-3" class="px-3">
         <v-spacer><h2>PUROK-KONEK</h2></v-spacer>
@@ -115,10 +115,7 @@ const onFormSubmit = () => {
                         @click:append-inner="isPasswordConfirmVisible = !isPasswordConfirmVisible"
                         variant="outlined"
                         density="comfortable"
-                        :rules="[
-                          requiredValidator,
-                          (value) => confirmedValidator(value, formData.value.password),
-                        ]"
+                        :rules="[requiredValidator, (value) => confirmedValidator(value, formData.value.password)]"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -140,3 +137,18 @@ const onFormSubmit = () => {
     </v-app>
   </v-responsive>
 </template>
+
+<style scoped>
+.main-page {
+  color: var(--text-color);
+  background-color: var(--background-color);
+  text-align: center;
+  padding: 20px;
+  /* Updated to use relative path from public folder */
+  background-image: url('public/154085550_s.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Keeps the image fixed when scrolling */
+  min-height: 100vh; /* Ensures the background covers the full height */
+}
+</style>

@@ -33,7 +33,7 @@ const onFormSubmit = () => {
 
 <template>
   <v-responsive>
-    <v-app :theme="theme">
+    <v-app :theme="theme" class="main-page">
       <!-- Top Bar -->
       <v-app-bar color="green-darken-3" class="px-3">
         <v-spacer><h2>PUROK-KONEK</h2></v-spacer>
@@ -52,7 +52,7 @@ const onFormSubmit = () => {
             <!-- Left Section -->
             <v-col cols="12" md="6" class="text-center text-md-left">
               <v-img src="PUROK-KONEK-LOGO.jpg" width="400" height="350"></v-img>
-              <h1 class="purokkonek-title">PUROK-KONEK</h1>
+              <h1 class="purokkonek-title text-white">PUROK-KONEK</h1>
               <p class="purok-subtitle"></p>
             </v-col>
 
@@ -117,5 +117,18 @@ const onFormSubmit = () => {
   font-weight: 400;
   margin-top: 10px;
   max-width: 80%;
+}
+
+.main-page {
+  color: var(--text-color);
+  background-color: var(--background-color);
+
+  padding: 20px;
+  /* Updated to use relative path from public folder */
+  background-image: url('public/154085550_s.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Keeps the image fixed when scrolling */
+  min-height: 100vh; /* Ensures the background covers the full height */
 }
 </style>
