@@ -36,14 +36,24 @@ const onFormSubmit = () => {
     <v-app :theme="theme" class="main-page">
       <!-- Top Bar -->
       <v-app-bar color="green-darken-3" class="px-3">
-        <v-spacer><h2>PUROK-KONEK</h2></v-spacer>
-        <v-btn
-          :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-          text=""
-          slim
-          @click="toggleTheme"
-        />
-      </v-app-bar>
+  <div class="d-flex align-center">
+    <v-img
+      src="PUROK-KONEK-LOGO.jpg"
+      alt="Purok-Konek Logo"
+      width="40"
+      height="40"
+      class="mr-2"
+    ></v-img>
+    <h2 class="mb-0 text-white">PUROK-KONEK</h2>
+  </div>
+  <v-spacer></v-spacer>
+  <v-btn
+    :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+    text=""
+    slim
+    @click="toggleTheme"
+  />
+</v-app-bar>
 
       <!-- Main Content -->
       <v-main>
