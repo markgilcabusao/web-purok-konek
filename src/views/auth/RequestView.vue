@@ -176,7 +176,6 @@ function submitRequest() {
 .main-page {
   color: var(--text-color);
   background-color: var(--background-color);
-  text-align: center;
   padding: 20px;
   /* Updated to use relative path from public folder */
   background-image: url('public/154085550_s.jpg');
