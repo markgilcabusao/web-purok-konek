@@ -24,31 +24,42 @@ const features = ref([
   },
 ]);
 
-
+function handleLogout() {
+  console.log('User logged out');
+  
+}
 
 </script>
 <template>
   <div :class="['main-page', theme === 'dark' ? 'dark-mode' : '']">
       <section class="intro">
         <br><br><br>
+        <v-row cols="12" md="6" class="text-center text-md-left">
+          <br>
+              <v-img src="PUROK-KONEK-LOGO.jpg" width="300" height="300"></v-img>
+            </v-row>
+            <br><br>
         <h1>Welcome to Purok-Konek</h1>
         <br>
-        <div class="intro-border">
           <p>
             Your one-stop platform for connecting with your community.<br> Stay informed, collaborate, and grow together.
           </p>
-        </div>
         <router-link to="/request" class="text-decoration-none">
           <button class="text-center green--text">Go to Request Form</button>
         </router-link>
       </section>
-      <section class="features">
-        <h3>Our Features</h3>
+      <section class="features"> 
+        <br>
+        <hr>
+        <br><br>
+        <h1>Our Features</h1>
+        <br>
         <div class="feature-cards">
           <div class="card" v-for="feature in features" :key="feature.title">
             <i :class="feature.icon" class="feature-icon"></i>
             <h3>{{ feature.title }}</h3>
             <p>{{ feature.description }}</p>
+          
           </div>
         </div>
       </section>
@@ -57,6 +68,22 @@ const features = ref([
       <!-- Top Bar -->
       <v-app-bar color="green-darken-3" class="px-3">
         <v-spacer><h2 class="text-start">PUROK-KONEK</h2></v-spacer>
+        <v-menu offset-y>
+            <template #activator="{ props }">
+              <v-btn v-bind="props" icon>
+                <v-icon>mdi-menu</v-icon> 
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item @click="handleLogout">
+                <v-list-item-title>  
+                  <router-link to="/" class="text-decoration-none">
+                    <p>Log Out</p>
+                  </router-link>
+                 </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         <v-btn
           :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
           text=""
@@ -64,8 +91,9 @@ const features = ref([
           @click="toggleTheme"
         />
       </v-app-bar>
-    </v-app> 
+    </v-app>
   </v-responsive>
+      
   </div>
 </template>
 
@@ -167,6 +195,8 @@ h1 {
   text-transform: uppercase;
 }
 
+
+
 h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
@@ -207,7 +237,7 @@ h3 {
   border: none;
   padding: 10px 20px;
   font-size: 1rem;
-  border-radius: 25px;
+  
   cursor: pointer;
   transition: background-color 0.3s, box-shadow 0.3s;
   text-decoration: none;
@@ -267,7 +297,7 @@ h3 {
   color: #333333; 
 }
 
-.card p {
+.card  {
   font-family: Arial, sans-serif;
   font-size: 1rem;
   color: #555555; 
