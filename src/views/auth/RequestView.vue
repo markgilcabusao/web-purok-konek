@@ -45,7 +45,7 @@ function submitRequest() {
 
 <template>
   <v-responsive>
-    <v-app :theme="theme">
+    <v-app :theme="theme" class="main-page">
       <!-- Top Bar -->
       <v-app-bar color="green-darken-3" class="px-3" dark>
         <v-spacer>
@@ -157,7 +157,7 @@ function submitRequest() {
                     <p class="mb-6">Your request for <strong>{{ requestType }}</strong> has been received. We will get back to you shortly.</p>
                     <v-btn type="submit" block color="green-darken-3" class="signup white--text mb-2">
                   <router-link to="/appointment" class="text-decoration-none">
-                    <p class="text-center text-white">Next to Appointment</p>
+                    <p class="text-center text-white">Set Your Appointment</p>
                   </router-link>
                 </v-btn>
                   </div>
@@ -170,3 +170,19 @@ function submitRequest() {
     </v-app>
   </v-responsive>
 </template>
+
+<style scoped>
+
+.main-page {
+  color: var(--text-color);
+  background-color: var(--background-color);
+  text-align: center;
+  padding: 20px;
+  /* Updated to use relative path from public folder */
+  background-image: url('public/154085550_s.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Keeps the image fixed when scrolling */
+  min-height: 100vh; /* Ensures the background covers the full height */
+}
+</style>
