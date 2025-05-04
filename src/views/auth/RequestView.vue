@@ -41,15 +41,6 @@ function submitRequest() {
     })
   }, 1500)
 }
-
-function resetForm() {
-  requestType.value = ''
-  comment.value = ''
-  name.value = ''
-  email.value = ''
-  phone.value = ''
-  submitted.value = false
-}
 </script>
 
 <template>
