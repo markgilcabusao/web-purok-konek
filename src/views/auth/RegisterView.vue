@@ -59,7 +59,7 @@ const onFormSubmit = () => {
             <v-col cols="12" sm="10" md="8" lg="6">
               <v-card class="mx-auto pa-6" elevation="8" rounded="lg">
                 <br /><br />
-                <v-card-title class="text-h4 text-center">Create a new account</v-card-title>
+                <v-card-title class="text-h4 text-center">Create a new <br>account</v-card-title>
                 <v-card-subtitle class="text-center pb-4">It's quick and easy.</v-card-subtitle>
 
                 <v-form ref="refVForm" @submit.prevent="onFormSubmit">
