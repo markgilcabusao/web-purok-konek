@@ -67,30 +67,46 @@ function handleLogout() {
     <v-app :theme="theme">
       <!-- Top Bar -->
       <v-app-bar color="green-darken-3" class="px-3">
-        <v-spacer><h2 class="text-start">PUROK-KONEK</h2></v-spacer>
-        <v-menu offset-y>
-            <template #activator="{ props }">
-              <v-btn v-bind="props" icon>
-                <v-icon>mdi-menu</v-icon> 
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item @click="handleLogout">
-                <v-list-item-title>  
-                  <router-link to="/" class="text-decoration-none">
-                    <p>Log Out</p>
-                  </router-link>
-                 </v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        <v-btn
-          :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-          text=""
-          slim
-          @click="toggleTheme"
-        />
-      </v-app-bar>
+  <div class="d-flex align-center">
+    <v-img
+      src="PUROK-KONEK-LOGO.jpg"
+      alt="Purok-Konek Logo"
+      width="40"
+      height="40"
+      class="mr-2"
+    ></v-img>
+    <h2 class="mb-0 text-white">PUROK-KONEK</h2>
+  </div>
+  <v-spacer></v-spacer>
+  <!-- Menu Button -->
+  <v-menu offset-y>
+    <template #activator="{ props }">
+      <v-btn v-bind="props" icon>
+        <v-icon>mdi-menu</v-icon>
+      </v-btn>
+    </template>
+    <v-list>
+      <v-list-item @click="handleLogout">
+        <v-list-item-title>
+          <v-btn type="submit" block color="green-darken-3" class="signup white--text">
+            <v-list-item-icon>
+          <v-icon>mdi-logout</v-icon>
+        </v-list-item-icon>
+                    <router-link to="/" class="text-decoration-none">
+                      <p class="text-center text-white">Log Out</p>
+                    </router-link>
+                  </v-btn></v-list-item-title>
+      </v-list-item>
+    </v-list>
+  </v-menu>
+  <!-- Theme Toggle Button -->
+  <v-btn
+    :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+    text=""
+    slim
+    @click="toggleTheme"
+  />
+</v-app-bar>
     </v-app>
   </v-responsive>
       
