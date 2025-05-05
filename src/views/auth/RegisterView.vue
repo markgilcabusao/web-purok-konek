@@ -5,11 +5,14 @@ import {
   emailValidator,
   passwordValidator,
   confirmedValidator,
-} from '@/utils/validator';
+} from '@/utils/validator'
 
-import { ref } from 'vue';
-import AlertNotification from '@/components/common/AlertNotification.vue';
-import { supabase, formActionDefault } from '@/utils/supabase.js';
+import { ref } from 'vue'
+import AlertNotification from '@/components/common/AlertNotification.vue'
+import { supabase, formActionDefault } from '@/utils/supabase.js'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 // Theme toggle functionality
 const theme = ref('light');
@@ -18,7 +21,7 @@ function toggleTheme() {
 }
 
 // Form reference and data
-const refVForm = ref(null);
+const refVForm = ref(null)
 const formDataDefault = {
   firstname: '',
   lastname: '',
@@ -26,12 +29,12 @@ const formDataDefault = {
   password: '',
   password_confirmation: '',
 };
-const formData = ref({ ...formDataDefault });
-const formAction = ref({ ...formActionDefault });
+const formData = ref({ ...formDataDefault })
+const formAction = ref({ ...formActionDefault })
 
 // Password visibility toggles
-const isPasswordVisible = ref(false);
-const isPasswordConfirmVisible = ref(false);
+const isPasswordVisible = ref(false)
+const isPasswordConfirmVisible = ref(false)
 
 // Registration function
 const onSubmit = async () => {
@@ -46,19 +49,25 @@ const onSubmit = async () => {
     data: {
       firstname: formData.value.firstname,
       lastname: formData.value.lastname,
+      //is_admin: false //turn true if admin account
     }
   }
 })
 
 if (error) {
-  console.log(error);
-  formAction.value.formErrorMessage = error.message;
-  formAction.value.formStatus = error.status;
+  console.log(error)
+  formAction.value.formErrorMessage = error.message
+  formAction.value.formStatus = error.status
 } else if (data) {
   console.log(data);
-  formAction.value.formSuccessMessage = 'Registration successful!';
-  refVForm.value.reset() // Reset the form after successful registration
+  formAction.value.formSuccessMessage = 'Registration successful!'
+
+  router.replace('/main')
 }
+
+  
+  refVForm.value.reset() // Reset the form after successful registration
+
   formAction.value.formProcess = false
 }
 
