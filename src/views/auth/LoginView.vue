@@ -60,7 +60,7 @@ const onFormSubmit = () => {
       <v-app-bar color="green-darken-3" class="px-3">
         <div class="d-flex align-center">
           <v-img
-            src="PUROK-KONEK-LOGO.jpg"
+            src="public/PUROK-KONEK-LOGO-removebg-preview.png"
             alt="Purok-Konek Logo"
             width="40"
             height="40"
@@ -77,7 +77,7 @@ const onFormSubmit = () => {
           <v-row align="center" justify="center">
             <!-- Left Section -->
             <v-col cols="12" md="6" class="text-center text-md-left">
-              <v-img src="PUROK-KONEK-LOGO.jpg" width="400" height="350"></v-img>
+              <v-img src="public/PUROK-KONEK-LOGO-removebg-preview.png" width="400" height="350"></v-img>
               <h1 class="purokkonek-title text-white">PUROK-KONEK</h1>
               <p class="purok-subtitle"></p>
             </v-col>
@@ -85,12 +85,14 @@ const onFormSubmit = () => {
             <!-- Right Section -->
             <v-col cols="12" md="4">
               <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+
                 <h1 class="text-center">Welcome back!</h1>
                 <p class="text-center">We're so excited to see you again!</p>
                 <AlertNotification :form-success-message="formAction.formSuccessMessage" 
              :form-error-message="formAction.formErrorMessage">
             </AlertNotification>
                 <br />
+
                 <!-- Success Message -->
                 <v-alert
                   v-if="formAction.formSuccessMessage"

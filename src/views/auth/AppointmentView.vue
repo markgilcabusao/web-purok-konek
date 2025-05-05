@@ -19,7 +19,7 @@ const submitAppointment = () => {
       <v-app-bar color="green-darken-3" class="px-3">
   <div class="d-flex align-center">
     <v-img
-      src="PUROK-KONEK-LOGO.jpg"
+      src="public/PUROK-KONEK-LOGO-removebg-preview.png"
       alt="Purok-Konek Logo"
       width="40"
       height="40"

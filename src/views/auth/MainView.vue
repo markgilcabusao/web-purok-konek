@@ -31,7 +31,7 @@ function handleLogout() {
         <br><br><br>
         <v-row cols="12" md="6" class="text-center text-md-left">
           <br>
-              <v-img src="PUROK-KONEK-LOGO.jpg" width="300" height="300"></v-img>
+              <v-img src="public/PUROK-KONEK-LOGO-removebg-preview.png" width="300" height="300"></v-img>
             </v-row>
             <br><br>
         <h1>Welcome to Purok-Konek</h1>
@@ -45,7 +45,7 @@ function handleLogout() {
       </section>
       <section class="features"> 
         <br>
-        <hr>
+        
         <br><br>
         <h1>Our Features</h1>
         <br>
@@ -64,7 +64,7 @@ function handleLogout() {
       <v-app-bar color="green-darken-3" class="px-3">
   <div class="d-flex align-center">
     <v-img
-      src="PUROK-KONEK-LOGO.jpg"
+      src="public/PUROK-KONEK-LOGO-removebg-preview.png"
       alt="Purok-Konek Logo"
       width="40"
       height="40"
@@ -139,7 +139,6 @@ function handleLogout() {
   margin-top: 10px;
 }
 
-
 .v-app-bar {
   display: flex;
   align-items: center;
@@ -199,8 +198,6 @@ h1 {
   text-transform: uppercase;
 }
 
-
-
 h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
@@ -212,8 +209,6 @@ h3 {
   margin-bottom: 40px;
   text-align: center;
 }
-
-
 
 .intro p {
   font-size: 1.2rem;
@@ -263,8 +258,6 @@ h3 {
   margin-top: 20px;
 }
 
-
-
 .feature-cards {
   display: flex;
   justify-content: center;
@@ -305,6 +298,17 @@ h3 {
   font-family: Arial, sans-serif;
   font-size: 1rem;
   color: #555555; 
+}
+
+.main-page {
+  color: var(--text-color);
+  background-color: var(--background-color);
+  background-image: url('public/154085550_s.jpg'); /* Add the background image */
+  background-size: cover; /* Ensure the image covers the entire background */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  text-align: center;
+  padding: 20px;
 }
 
 </style>
