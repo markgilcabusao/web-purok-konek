@@ -1,34 +1,62 @@
 <script setup>
-import { ref } from 'vue'
+import { supabase } from '@/utils/supabase.js';
+import { ref } from 'vue';
 import { requiredValidator, emailValidator } from '@/utils/validator'
+import { useRouter } from 'vue-router'
+import AlertNotification from '@/components/common/AlertNotification.vue'
 
-const theme = ref('light')
+const theme = ref('light');
 
 function toggleTheme() {
-  theme.value = theme.value === 'light' ? 'dark' : 'light'
+  theme.value = theme.value === 'light' ? 'dark' : 'light';
 }
 
-const isPasswordVisible = ref(false)
-const refVForm = ref()
+const router = useRouter();
 
 const formDataDefault = {
   email: '',
   password: '',
-}
+};
 
-const formData = ref({
-  ...formDataDefault,
-})
+const formData = ref({ ...formDataDefault })
+const formAction = ref({
+  formProcess: false,
+  formErrorMessage: '',
+  formSuccessMessage: '',
+});
 
-const onLogin = () => {
-  alert(formData.value.email)
-}
+const isPasswordVisible = ref(false)
+const refVForm = ref()
+
+const onSubmit = async () => {
+  formAction.value = { formProcess: true, formErrorMessage: '', formSuccessMessage: '' }
+
+  
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: formData.value.email,
+      password: formData.value.password,
+    });
+
+    if (error) {
+      console.error(error)
+      formAction.value.formErrorMessage = error.message
+    } else if (data) {
+      console.log(data)
+      formAction.value.formSuccessMessage = 'Login successful!'
+      router.replace('/main'); // Redirect to the main page
+    }
+    refVForm.value.reset() 
+
+    formAction.value.formProcess = false
+
+  }
 
 const onFormSubmit = () => {
   refVForm.value?.validate().then(({ valid }) => {
-    if (valid) onLogin()
+    if (valid) onSubmit()
   })
 }
+
 </script>
 
 <template>
@@ -36,24 +64,24 @@ const onFormSubmit = () => {
     <v-app :theme="theme" class="main-page">
       <!-- Top Bar -->
       <v-app-bar color="green-darken-3" class="px-3">
-  <div class="d-flex align-center">
-    <v-img
-      src="PUROK-KONEK-LOGO.jpg"
-      alt="Purok-Konek Logo"
-      width="40"
-      height="40"
-      class="mr-2"
-    ></v-img>
-    <h2 class="mb-0 text-white">PUROK-KONEK</h2>
-  </div>
-  <v-spacer></v-spacer>
-  <v-btn
-    :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-    text=""
-    slim
-    @click="toggleTheme"
-  />
-</v-app-bar>
+        <div class="d-flex align-center">
+          <v-img
+            src="PUROK-KONEK-LOGO.jpg"
+            alt="Purok-Konek Logo"
+            width="40"
+            height="40"
+            class="mr-2"
+          ></v-img>
+          <h2 class="mb-0 text-white">PUROK-KONEK</h2>
+        </div>
+        <v-spacer></v-spacer>
+        <v-btn
+          :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+          text=""
+          slim
+          @click="toggleTheme"
+        />
+      </v-app-bar>
 
       <!-- Main Content -->
       <v-main>
@@ -69,9 +97,34 @@ const onFormSubmit = () => {
             <!-- Right Section -->
             <v-col cols="12" md="4">
               <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+                
                 <h1 class="text-center">Welcome back!</h1>
                 <p class="text-center">We're so excited to see you again!</p>
+                <AlertNotification :form-success-message="formAction.formSuccessMessage" 
+             :form-error-message="formAction.formErrorMessage">
+            </AlertNotification>
                 <br />
+
+                <!-- Success Message -->
+                <v-alert
+                  v-if="formAction.formSuccessMessage"
+                  type="success"
+                  variant="tonal"
+                  class="mb-4"
+                >
+                  {{ formAction.formSuccessMessage }}
+                </v-alert>
+
+                <!-- Error Message -->
+                <v-alert
+                  v-if="formAction.formErrorMessage"
+                  type="error"
+                  variant="tonal"
+                  class="mb-4"
+                >
+                  {{ formAction.formErrorMessage }}
+                </v-alert>
+
                 <v-form ref="refVForm" @submit.prevent="onFormSubmit">
                   <v-text-field
                     v-model="formData.email"
@@ -96,10 +149,15 @@ const onFormSubmit = () => {
                     :rules="[requiredValidator]"
                   ></v-text-field>
 
-                  <v-btn type="submit" block color="green-darken-3" class="signup white--text mb-2">
-                    <router-link to="/main" class="text-decoration-none">
-                      <p class="text-center text-white">Log in</p>
-                    </router-link>
+                  <v-btn
+                    type="submit"
+                    block
+                    color="green-darken-3"
+                    class="signup white--text mb-2"
+                    :disabled="formAction.formProcess"
+                    :loading="formAction.formProcess"
+                  >
+                    Log in
                   </v-btn>
                   <router-link to="/register" class="text-decoration-none">
                     <p class="text-center green--text">Create new account</p>
@@ -130,8 +188,8 @@ const onFormSubmit = () => {
 }
 
 .main-page {
-  color: var(--text-color);
-  background-color: var(--background-color);
+  color: #white;
+  background-color: #white;
 
   padding: 20px;
   /* Updated to use relative path from public folder */
