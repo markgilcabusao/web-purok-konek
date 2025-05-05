@@ -21,10 +21,6 @@ const requestTypes = [
   'Other'
 ]
 
-function toggleTheme() {
-  theme.value = theme.value === 'light' ? 'dark' : 'light'
-}
-
 function submitRequest() {
   loading.value = true
   
@@ -59,12 +55,6 @@ function submitRequest() {
     <h2 class="mb-0 text-white">PUROK-KONEK</h2>
   </div>
   <v-spacer></v-spacer>
-  <v-btn
-    :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-    text=""
-    slim
-    @click="toggleTheme"
-  />
 </v-app-bar>
 
       <!-- Main Content -->

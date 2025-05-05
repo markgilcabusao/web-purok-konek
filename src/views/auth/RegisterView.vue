@@ -13,13 +13,6 @@ import { supabase, formActionDefault } from '@/utils/supabase.js'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-// Theme toggle functionality
-const theme = ref('light');
-function toggleTheme() {
-  theme.value = theme.value === 'light' ? 'dark' : 'light';
-}
-
 // Form reference and data
 const refVForm = ref(null)
 const formDataDefault = {
@@ -64,7 +57,6 @@ if (error) {
 
   router.replace('/main')
 }
-
   
   refVForm.value.reset() // Reset the form after successful registration
 
@@ -95,12 +87,6 @@ const onFormSubmit = () => {
           <h2 class="mb-0 text-white">PUROK-KONEK</h2>
         </div>
         <v-spacer></v-spacer>
-        <v-btn
-          :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-          text=""
-          slim
-          @click="toggleTheme"
-        />
       </v-app-bar>
 
       <v-main>
@@ -202,10 +188,9 @@ const onFormSubmit = () => {
 
 <style scoped>
 .main-page {
-  color: #white;
-  background-color: #white;
+  color: #fff;
+  background-color: #fff;
   padding: 20px;
-  /* Updated to use relative path from public folder */
   background-image: url('public/154085550_s.jpg');
   background-size: cover;
   background-position: center;
