@@ -85,12 +85,14 @@ const onFormSubmit = () => {
             <!-- Right Section -->
             <v-col cols="12" md="4">
               <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+                
                 <h1 class="text-center">Welcome back!</h1>
                 <p class="text-center">We're so excited to see you again!</p>
                 <AlertNotification :form-success-message="formAction.formSuccessMessage" 
              :form-error-message="formAction.formErrorMessage">
             </AlertNotification>
                 <br />
+
                 <!-- Success Message -->
                 <v-alert
                   v-if="formAction.formSuccessMessage"
