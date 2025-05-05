@@ -1,11 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 
-const theme = ref('light')
-
-function toggleTheme() {
-  theme.value = theme.value === 'light' ? 'dark' : 'light';
-}
 const features = ref([
   {
     title: "Community News",
@@ -99,13 +94,6 @@ function handleLogout() {
       </v-list-item>
     </v-list>
   </v-menu>
-  <!-- Theme Toggle Button -->
-  <v-btn
-    :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-    text=""
-    slim
-    @click="toggleTheme"
-  />
 </v-app-bar>
     </v-app>
   </v-responsive>
