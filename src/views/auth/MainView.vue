@@ -1,5 +1,16 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const drawer = ref(false) // Controls the visibility of the sidebar
+
+const user = ref({
+  initials: "JO", 
+  fullName: "Jazzmher Osico", 
+  email: "jazzkiddo@gmail.com", 
+});
 
 const features = ref([
   {
@@ -19,34 +30,163 @@ const features = ref([
   },
 ]);
 
-function handleLogout() {
-  console.log('User logged out');
-  
+const notifications = ref([
+  { id: 1, message: "Your appointment has been successfully scheduled!" },
+]);
+
+const hasNewNotification = ref(false);
+
+setTimeout(() => {
+  notifications.value.push({ id: 3, message: "Your request for a Barangay Clearance is being processed." });
+  hasNewNotification.value = true;
+}, 5000);
+
+function resetNotification() {
+  hasNewNotification.value = false;
 }
 
+function goToAccountSettings() {
+  router.push('/account-settings') 
+}
+
+function handleLogout() {
+  console.log('User logged out')
+  router.push('/') 
+}
 </script>
+
 <template>
-  <div :class="['main-page', theme === 'dark' ? 'dark-mode' : '']">
+  <v-app :theme="theme">
+    <div :class="['main-page', theme === 'dark' ? 'dark-mode' : '']">
+      <!-- Sidebar -->
+<v-navigation-drawer v-model="drawer" app color="green-darken-3">
+  <v-list>
+    <v-list-item>
+      <v-list-item-title class="text-h5 text-white">Dashboard</v-list-item-title>
+    </v-list-item>
+    <v-divider></v-divider>
+
+    <v-list-item>
+      <router-link to="/" class="nav-link">
+        <v-icon left class="mr-2">mdi-home</v-icon>
+        <v-list-item-title>Home</v-list-item-title>
+      </router-link>
+    </v-list-item>
+
+    <v-list-item>
+      <router-link to="/my-profile" class="nav-link">
+        <v-icon left class="mr-2">mdi-account</v-icon>
+        <v-list-item-title>My Profile</v-list-item-title>
+      </router-link>
+    </v-list-item>
+
+    <v-list-item>
+      <router-link to="/appointment-overview" class="nav-link">
+        <v-icon left class="mr-2">mdi-calendar-check</v-icon>
+        <v-list-item-title>Appointment Overview</v-list-item-title>
+      </router-link>
+    </v-list-item>
+
+    <v-list-item>
+      <router-link to="/pending-requests" class="nav-link">
+        <v-icon left class="mr-2">mdi-clock-outline</v-icon>
+        <v-list-item-title>Pending Requests</v-list-item-title>
+      </router-link>
+    </v-list-item>
+  </v-list>
+</v-navigation-drawer>
+
+      <!-- App Bar -->
+      <v-app-bar color="green-darken-3" class="px-3">
+        <v-btn icon @click="drawer = !drawer">
+          <v-icon>mdi-menu</v-icon>
+        </v-btn>
+        <div class="d-flex align-center">
+          <v-img
+            src="public/PUROK-KONEK-LOGO-removebg-preview.png"
+            alt="Purok-Konek Logo"
+            width="40"
+            height="40"
+            class="mr-2"
+          ></v-img>
+          <h2 class="mb-0 text-white">PUROK-KONEK</h2>
+        </div>
+        <v-spacer></v-spacer>
+
+        <!-- Notification Button -->
+        <v-menu offset-y @open="resetNotification">
+          <template #activator="{ props }">
+            <v-btn v-bind="props" icon>
+              <v-icon
+                :class="['bell-icon', { 'notify': hasNewNotification }]"
+                :color="hasNewNotification ? 'red' : 'white'"
+              >
+                mdi-bell
+              </v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item v-for="notification in notifications" :key="notification.id">
+              <v-list-item-title>{{ notification.message }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <!-- User Menu -->
+        <v-menu min-width="200px">
+  <template v-slot:activator="{ props }">
+    <v-btn icon v-bind="props">
+      <v-avatar color="green" size="45">
+        <span class="text-h5">{{ user.initials }}</span>
+      </v-avatar>
+    </v-btn>
+  </template>
+  <v-card>
+    <v-card-text>
+      <div class="mx-auto text-center">
+        <v-avatar color="brown">
+          <span class="text-h5">{{ user.initials }}</span>
+        </v-avatar>
+        <h3>{{ user.fullName }}</h3>
+        <p class="text-caption mt-1">
+          {{ user.email }}
+        </p>
+        <v-divider class="my-3"></v-divider>
+        <v-btn variant="text" rounded @click="goToAccountSettings">
+          <v-icon class="mr-2">mdi-account-cog</v-icon>
+          Account Settings
+        </v-btn>
+        <v-divider class="my-3"></v-divider>
+        <v-btn variant="text" rounded @click="handleLogout">
+          <v-icon class="mr-2">mdi-logout</v-icon>
+          Sign Out
+        </v-btn>
+      </div>
+    </v-card-text>
+  </v-card>
+</v-menu>
+      </v-app-bar>
+
+      <!-- Main Content -->
       <section class="intro">
         <br><br><br>
         <v-row cols="12" md="6" class="text-center text-md-left">
-          <br>
-              <v-img src="public/PUROK-KONEK-LOGO-removebg-preview.png" width="300" height="300"></v-img>
-            </v-row>
-            <br><br>
+          <v-img src="public/PUROK-KONEK-LOGO-removebg-preview.png" width="300" height="300"></v-img>
+        </v-row>
+        <br><br>
         <h1>Welcome to Purok-Konek</h1>
         <br>
-          <p>
-            Your one-stop platform for connecting with your community.<br> Stay informed, collaborate, and grow together.
-          </p>
-        <router-link to="/request" class="text-decoration-none">
+        <p>
+          Your one-stop platform for connecting with your community.<br>
+          Stay informed, collaborate, and grow together.
+        </p>
+        <router-link to="/requests" class="text-decoration-none">
           <button class="text-center green--text">Go to Request Form</button>
         </router-link>
       </section>
-      <section class="features"> 
-        <br>
-        
-        <br><br>
+
+      <section class="features">
+        <br><hr><br><br>
         <h1>Our Features</h1>
         <br>
         <div class="feature-cards">
@@ -54,51 +194,11 @@ function handleLogout() {
             <i :class="feature.icon" class="feature-icon"></i>
             <h3>{{ feature.title }}</h3>
             <p>{{ feature.description }}</p>
-          
           </div>
         </div>
       </section>
-      <v-responsive>
-    <v-app :theme="theme">
-      <!-- Top Bar -->
-      <v-app-bar color="green-darken-3" class="px-3">
-  <div class="d-flex align-center">
-    <v-img
-      src="public/PUROK-KONEK-LOGO-removebg-preview.png"
-      alt="Purok-Konek Logo"
-      width="40"
-      height="40"
-      class="mr-2"
-    ></v-img>
-    <h2 class="mb-0 text-white">PUROK-KONEK</h2>
-  </div>
-  <v-spacer></v-spacer>
-  <!-- Menu Button -->
-  <v-menu offset-y>
-    <template #activator="{ props }">
-      <v-btn v-bind="props" icon>
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-    </template>
-    <v-list>
-      <v-list-item @click="handleLogout">
-        <v-list-item-title>
-          <v-btn type="submit" block color="green-darken-3" class="signup white--text">
-            <v-list-item-icon>
-          <v-icon>mdi-logout</v-icon>
-        </v-list-item-icon>
-                    <router-link to="/" class="text-decoration-none">
-                      <p class="text-center text-white">Log Out</p>
-                    </router-link>
-                  </v-btn></v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-menu>
-</v-app-bar>
-    </v-app>
-  </v-responsive>
-      
-  </div>
+    </div>
+  </v-app>
 </template>
 
 <style scoped>
@@ -125,9 +225,12 @@ function handleLogout() {
 }
 
 .main-page {
-
   color: var(--text-color);
   background-color: var(--background-color);
+  background-image: url('public/154085550_s.jpg'); /* Add the background image */
+  background-size: cover; /* Ensure the image covers the entire background */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
   text-align: center;
   padding: 20px;
 }
@@ -139,11 +242,12 @@ function handleLogout() {
   margin-top: 10px;
 }
 
-.v-app-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
+.clickable {
+  cursor: pointer;
+}
+
+.v-list-item {
+  cursor: pointer;
 }
 
 .v-btn {
@@ -300,15 +404,54 @@ h3 {
   color: #555555; 
 }
 
-.main-page {
-  color: var(--text-color);
-  background-color: var(--background-color);
-  background-image: url('public/154085550_s.jpg'); /* Add the background image */
-  background-size: cover; /* Ensure the image covers the entire background */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevent the image from repeating */
-  text-align: center;
-  padding: 20px;
+.bell-icon {
+  transition: transform 0.3s ease;
 }
 
+.bell-icon.notify {
+  animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: black !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+
+.nav-link:hover {
+  background-color: #c8e6c9;
+  transform: translateX(5px);
+}
+
+.router-link-exact-active {
+  background-color: #a5d6a7;
+  border-radius: 6px;
+}
+
+.v-list-item-title {
+  color: black !important;
+}
+
+.v-icon {
+  color: black !important;
+}
 </style>

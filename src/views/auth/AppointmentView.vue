@@ -59,12 +59,10 @@ const submitAppointment = () => {
                 Thank you for submitting your form. We appreciate your time and effort in providing the necessary information.
               </p>
               <v-btn color="green-darken-3" class="white--text">
-                <router-link to="/main" class="text-decoration-none">
-                  <h5 class="text-center text-white">Back to Homepage
-
-</h5>
-                </router-link>
-              </v-btn>
+      <router-link to="/main" class="text-decoration-none text-white">
+        <h5 class="text-center">Back to Homepage</h5>
+       </router-link>
+          </v-btn>
             </div>
           </template>
         </div>
