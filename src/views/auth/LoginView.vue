@@ -178,9 +178,6 @@ const onFormSubmit = () => {
 .main-page {
   color: #fff;
   background-color: #fff;
-
-  
-  /* Updated to use relative path from public folder */
   background-image: url('public/154085550_s.jpg');
   background-size: cover;
   background-position: center;
