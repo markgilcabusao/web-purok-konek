@@ -3,11 +3,11 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 // Default profile picture
-const defaultProfilePicture = 'https://via.placeholder.com/100'
+const defaultProfilePicture = '/Picturee.jpg'
 
 // Simulated user data
 const user = ref({
-  profilePicture: '',
+  profilePicture: '/Picturee.jpg',
   fullName: 'Jazzmher Osico',
   email: 'jazzkiddo@gmail.com',
   phone: '9123456789',
@@ -18,87 +18,138 @@ const router = useRouter()
 
 // Placeholder function for uploading a profile picture
 const uploadProfilePicture = () => {
-  alert('Profile picture upload functionality is not implemented yet.')
+  document.getElementById('file-input').click(); // Trigger file input click
+}
+
+// Placeholder function to handle file selection
+const handleFileChange = (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = () => {
+      user.value.profilePicture = reader.result // Set the uploaded image as the profile picture
+    }
+    reader.readAsDataURL(file)
+  }
 }
 
 // Navigate to the Edit Profile page
 const editProfile = () => {
-  router.push('/edit-profile') // Replace with the actual route for editing the profile
+  router.push('/edit-profile')
 }
 </script>
 
 <template>
-  <div class="my-profile">
-    <v-container class="py-10">
-      <v-row justify="center">
-        <v-col cols="12" md="8" lg="6">
-          <v-card elevation="4" class="profile-card">
-            <v-card-title class="text-h5 text-center">My Profile</v-card-title>
-            <v-card-text>
-              <div class="avatar-container text-center mb-4">
+  <v-app class="main-page">
+    <!-- Top Navbar with Logo and Back Button -->
+    <v-app-bar color="green-darken-3" class="px-3">
+      <div class="d-flex align-center">
+        <!-- Back Button -->
+        <v-btn icon @click="router.back()" class="mr-2">
+          <v-icon color="white">mdi-arrow-left</v-icon>
+        </v-btn>
+
+        <!-- Logo -->
+        <v-img
+          src="/PUROK-KONEK-LOGO-removebg-preview.png"
+          alt="Purok-Konek Logo"
+          width="40"
+          height="40"
+          class="mr-2"
+        ></v-img>
+        <h2 class="mb-0 text-white">PUROK-KONEK</h2>
+      </div>
+      <v-spacer></v-spacer>
+    </v-app-bar>
+
+    <!-- Main Content -->
+    <v-main>
+      <div class="my-profile">
+        <v-container class="py-10">
+          <v-row justify="center">
+            <v-col cols="12" md="8" lg="6">
+              <v-card elevation="4" class="profile-card">
+                <v-card-title class="text-h5 text-center">My Profile</v-card-title>
+                
                 <!-- Profile Picture -->
-                <v-avatar size="100" class="mx-auto">
-                  <v-img :src="user.profilePicture || defaultProfilePicture" alt="Profile Picture"></v-img>
-                </v-avatar>
-                <!-- Change Picture Button -->
-                <v-btn
-                  small
-                  color="primary"
-                  class="change-picture-btn"
-                  @click="uploadProfilePicture"
-                >
-                  Change Picture
-                </v-btn>
-              </div>
+                <div class="text-center mb-4">
+                  <v-avatar size="120" class="mx-auto">
+                    <v-img :src="user.profilePicture" alt="Profile Picture"></v-img>
+                  </v-avatar>
+                </div>
 
-              <!-- Profile Information -->
-              <v-list dense>
-                <v-list-item>
-                  <v-list-item-title><strong>Full Name:</strong> {{ user.fullName }}</v-list-item-title>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-title><strong>Email:</strong> {{ user.email }}</v-list-item-title>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-title><strong>Phone:</strong> +63{{ user.phone }}</v-list-item-title>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-title><strong>Address:</strong> {{ user.address }}</v-list-item-title>
-                </v-list-item>
-              </v-list>
+                <v-card-text>
+                  <div class="avatar-container text-center mb-4">
+                    <!-- Change Picture Button -->
+                    <v-btn
+                      small
+                      color="primary"
+                      class="change-picture-btn"
+                      @click="uploadProfilePicture"
+                    >
+                      Change Picture
+                    </v-btn>
 
-              <!-- Edit Profile Button -->
-              <v-card-actions class="justify-center">
-                <v-btn color="green-darken-2" @click="editProfile">
-                  Edit Profile
-                </v-btn>
-              </v-card-actions>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+                    <!-- Hidden File Input -->
+                    <input
+                      type="file"
+                      id="file-input"
+                      style="display: none"
+                      @change="handleFileChange"
+                      accept="image/*"
+                    />
+                  </div>
+
+                  <!-- Profile Information -->
+                  <v-list dense>
+                    <v-list-item>
+                      <v-list-item-title><strong>Full Name:</strong> {{ user.fullName }}</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                      <v-list-item-title><strong>Email:</strong> {{ user.email }}</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                      <v-list-item-title><strong>Phone:</strong> +63{{ user.phone }}</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                      <v-list-item-title><strong>Address:</strong> {{ user.address }}</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+
+                  <!-- Edit Profile Button -->
+                  <v-card-actions class="justify-center">
+                    <v-btn color="green-darken-2" @click="editProfile">
+                      Edit Profile
+                    </v-btn>
+                  </v-card-actions>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
+    </v-main>
+  </v-app>
 </template>
 
 <style scoped>
 .my-profile {
   background-color: var(--background-color, #f0f4f8);
-  background-image: url('public/154085550_s.jpg'); /* Add the background image */
-  background-size: cover; /* Ensure the image covers the entire background */
-  background-position: center; /* Center the image */
-  background-attachment: fixed; /* Make the background fixed */
-  min-height: 100vh; /* Ensure the background covers the full height of the viewport */
-  display: flex; /* Use flexbox to center the content */
-  justify-content: center; /* Horizontally center the content */
-  align-items: center; /* Vertically center the content */
-  padding: 20px; /* Add some padding for spacing */
+  background-image: url('/154085550_s.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 .profile-card {
-  background-color: white; /* Set the card background to plain white */
-  border-radius: 8px; /* Add rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .avatar-container {
@@ -114,4 +165,12 @@ const editProfile = () => {
   font-size: 12px;
 }
 
+.main-page {
+  background-color: #fff;
+  background-image: url('/154085550_s.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
 </style>

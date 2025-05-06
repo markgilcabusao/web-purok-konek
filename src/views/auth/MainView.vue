@@ -67,7 +67,7 @@ function handleLogout() {
     <v-divider></v-divider>
 
     <v-list-item>
-      <router-link to="/" class="nav-link">
+      <router-link to="/main" class="nav-link">
         <v-icon left class="mr-2">mdi-home</v-icon>
         <v-list-item-title>Home</v-list-item-title>
       </router-link>
