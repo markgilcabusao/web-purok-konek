@@ -114,38 +114,52 @@ function handleLogout() {
         <v-spacer></v-spacer>
 
         <!-- Notification Button -->
-        <v-menu offset-y @open="resetNotification">
-          <template #activator="{ props }">
-            <v-btn v-bind="props" icon>
-              <v-icon
-                :class="['bell-icon', { 'notify': hasNewNotification }]"
-                :color="hasNewNotification ? 'red' : 'white'"
-              >
-                mdi-bell
-              </v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item v-for="notification in notifications" :key="notification.id">
-              <v-list-item-title>{{ notification.message }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+<v-menu offset-y @open="resetNotification">
+  <template #activator="{ props }">
+    <v-btn v-bind="props" icon>
+      <v-badge
+        color="red"
+        overlap
+        dot
+        :content="notifications.length"
+        v-if="hasNewNotification"
+      >
+        <v-icon
+          :class="['bell-icon', { 'notify': hasNewNotification }]"
+          :color="hasNewNotification ? 'red' : 'white'"
+        >
+          mdi-bell
+        </v-icon>
+      </v-badge>
+      <v-icon
+        v-else
+        :color="hasNewNotification ? 'red' : 'white'"
+      >
+        mdi-bell
+      </v-icon>
+    </v-btn>
+  </template>
+  <v-list>
+    <v-list-item v-for="notification in notifications" :key="notification.id">
+      <v-list-item-title>{{ notification.message }}</v-list-item-title>
+    </v-list-item>
+  </v-list>
+</v-menu>
 
         <!-- User Menu -->
-        <v-menu min-width="200px">
+<v-menu min-width="200px">
   <template v-slot:activator="{ props }">
     <v-btn icon v-bind="props">
       <v-avatar color="green" size="45">
-        <span class="text-h5">{{ user.initials }}</span>
+        <v-img src="public/Picturee.jpg" alt="User Picture"></v-img>
       </v-avatar>
     </v-btn>
   </template>
   <v-card>
     <v-card-text>
       <div class="mx-auto text-center">
-        <v-avatar color="brown">
-          <span class="text-h5">{{ user.initials }}</span>
+        <v-avatar color="brown" size="100">
+          <v-img src="public/Picturee.jpg" alt="User Picture"></v-img>
         </v-avatar>
         <h3>{{ user.fullName }}</h3>
         <p class="text-caption mt-1">
