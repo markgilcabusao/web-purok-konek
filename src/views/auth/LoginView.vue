@@ -74,7 +74,7 @@ const onFormSubmit = () => {
       <!-- Main Content -->
       <v-main>
         <v-container class="fill-height">
-          <v-row align="center" justify="center">
+          <v-row align="center" justify="center 12">
             <!-- Left Section -->
             <v-col cols="12" md="6" class="text-center text-md-left">
               <v-img src="public/PUROK-KONEK-LOGO-removebg-preview.png" width="400" height="350"></v-img>
@@ -179,7 +179,7 @@ const onFormSubmit = () => {
   color: #fff;
   background-color: #fff;
 
-  padding: 20px;
+  
   /* Updated to use relative path from public folder */
   background-image: url('public/154085550_s.jpg');
   background-size: cover;

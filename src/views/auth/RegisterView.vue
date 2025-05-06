@@ -201,9 +201,10 @@ const onFormSubmit = () => {
 </template>
 
 <style scoped>
+
 .main-page {
-  color: #white;
-  background-color: #ffffff;
+  color: #fff;
+  background-color: #fff;
   padding: 20px;
   /* Updated to use relative path from public folder */
   background-image: url('public/154085550_s.jpg');
