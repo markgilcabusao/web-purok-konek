@@ -12,6 +12,3 @@ export const formActionDefault = {
     formSuccessMessage: ''
 }
 
-let { data: requests, error } = await supabase
-  .from('requests')
-  .select('*')

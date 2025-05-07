@@ -1,32 +1,25 @@
 <script setup>
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-
-// Simulated user data
-const user = ref({
-  profilePicture: 'public/Picturee.jpg',
-  fullName: 'Jazzmher Osico',
-  email: 'jazzkiddo@gmail.com',
-  phone: '9123456789',
-  address: 'P-1 Brgy.8 Lapu-Lapu Butuan City, Agusan del Norte',
-})
+import { useUserStore } from '@/stores/user'
+import { ref } from 'vue'
 
 const router = useRouter()
+const userStore = useUserStore()
 const fileInput = ref(null)
+
+const triggerFileInput = () => {
+  fileInput.value.click()
+}
 
 const uploadProfilePicture = (event) => {
   const file = event.target.files[0]
   if (file) {
     const reader = new FileReader()
     reader.onload = (e) => {
-      user.value.profilePicture = e.target.result
+      userStore.updatePicture(e.target.result)
     }
     reader.readAsDataURL(file)
   }
-}
-
-const triggerFileInput = () => {
-  fileInput.value.click()
 }
 
 const editProfile = () => {
@@ -40,29 +33,17 @@ const goBack = () => {
 
 <template>
   <v-app>
-    <!-- Navbar -->
     <v-app-bar color="green-darken-3" class="px-4" flat>
       <v-btn icon @click="goBack" class="me-2" variant="text">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
-
-      <!-- Logo + Title wrapper -->
       <div class="d-flex align-center">
-        <v-img
-          src="public/PUROK-KONEK-LOGO-removebg-preview.png"
-          alt="Purok-Konek Logo"
-          width="40"
-          height="40"
-          class="me-2"
-          contain
-        ></v-img>
+        <v-img src="public/PUROK-KONEK-LOGO-removebg-preview.png" width="40" height="40" class="me-2"></v-img>
         <h2 class="text-white font-weight-bold mb-0">PUROK-KONEK</h2>
       </div>
-
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <!-- Profile Content -->
     <v-main>
       <div class="my-profile">
         <v-container class="py-10">
@@ -73,7 +54,7 @@ const goBack = () => {
 
                 <div class="text-center my-4">
                   <v-avatar size="120" class="mx-auto">
-                    <v-img :src="user.profilePicture" alt="Profile Picture" />
+                    <v-img :src="userStore.profilePicture" />
                   </v-avatar>
                 </div>
 
@@ -81,28 +62,22 @@ const goBack = () => {
                   <v-btn small color="primary" @click="triggerFileInput">
                     Change Picture
                   </v-btn>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    ref="fileInput"
-                    style="display: none"
-                    @change="uploadProfilePicture"
-                  />
+                  <input type="file" accept="image/*" ref="fileInput" style="display: none" @change="uploadProfilePicture" />
                 </div>
 
                 <v-card-text>
                   <v-list dense>
                     <v-list-item>
-                      <v-list-item-title><strong>Full Name:</strong> {{ user.fullName }}</v-list-item-title>
+                      <v-list-item-title><strong>Full Name:</strong> {{ userStore.fullName }}</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
-                      <v-list-item-title><strong>Email:</strong> {{ user.email }}</v-list-item-title>
+                      <v-list-item-title><strong>Email:</strong> {{ userStore.email }}</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
-                      <v-list-item-title><strong>Phone:</strong> +63{{ user.phone }}</v-list-item-title>
+                      <v-list-item-title><strong>Phone:</strong> +63{{ userStore.phone }}</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
-                      <v-list-item-title><strong>Address:</strong> {{ user.address }}</v-list-item-title>
+                      <v-list-item-title><strong>Address:</strong> {{ userStore.address }}</v-list-item-title>
                     </v-list-item>
                   </v-list>
 
