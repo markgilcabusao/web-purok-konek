@@ -23,7 +23,7 @@ const viewDetails = (id) => router.push({ name: 'appointment-details', params: {
         </v-btn>
 
         <v-img
-          src="/PUROK-KONEK-LOGO-removebg-preview.png"
+          src="/images/PUROK-KONEK-LOGO-removebg-preview.png"
           alt="Logo"
           width="40"
           height="40"
@@ -74,7 +74,7 @@ const viewDetails = (id) => router.push({ name: 'appointment-details', params: {
 
 <style scoped>
 .main-page {
-  background-image: url('/154085550_s.jpg');
+  background-image: url('/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

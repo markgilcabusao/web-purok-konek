@@ -68,7 +68,7 @@ function saveChanges() {
 <style scoped>
 .account-settings {
   background-color: var(--background-color, #f0f4f8);
-  background-image: url('public/154085550_s.jpg'); /* Add the background image */
+  background-image: url('/images/154085550_s.jpg'); /* Add the background image */
   background-size: cover; /* Ensure the image covers the entire background */
   background-position: center; /* Center the image */
   background-attachment: fixed; /* Make the background fixed */

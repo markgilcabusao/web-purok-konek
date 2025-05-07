@@ -60,7 +60,7 @@ const onFormSubmit = () => {
       <v-app-bar color="green-darken-3" class="px-3">
         <div class="d-flex align-center">
           <v-img
-            src="public/PUROK-KONEK-LOGO-removebg-preview.png"
+            src="/images/PUROK-KONEK-LOGO-removebg-preview.png"
             alt="Purok-Konek Logo"
             width="40"
             height="40"
@@ -77,7 +77,7 @@ const onFormSubmit = () => {
           <v-row align="center" justify="center 12">
             <!-- Left Section -->
             <v-col cols="12" md="6" class="text-center text-md-left">
-              <v-img src="public/PUROK-KONEK-LOGO-removebg-preview.png" width="400" height="350"></v-img>
+              <v-img src="/images/PUROK-KONEK-LOGO-removebg-preview.png" width="400" height="350"></v-img>
               <h1 class="purokkonek-title text-white">PUROK-KONEK</h1>
               <p class="purok-subtitle"></p>
             </v-col>
@@ -178,7 +178,7 @@ const onFormSubmit = () => {
 .main-page {
   color: #fff;
   background-color: #fff;
-  background-image: url('public/154085550_s.jpg');
+  background-image: url('/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* Keeps the image fixed when scrolling */
