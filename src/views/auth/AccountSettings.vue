@@ -27,7 +27,7 @@ function saveChanges() {
   if (formRef.value?.validate()) {
     console.log('Saved:', form.value)
     alert('Changes saved successfully!')
-    router.push('/') // Redirect to homepage or another route
+    router.push('/main') // Redirect to homepage or another route
   }
 }
 </script>
