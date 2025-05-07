@@ -34,8 +34,8 @@
         component: RequestView,
       },
       {
-        path: '/appointments',
-        name: 'appointments',
+        path: '/appointment',
+        name: 'appointment',
         component: AppointmentView,
       },
       {
