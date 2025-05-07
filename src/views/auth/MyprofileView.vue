@@ -2,12 +2,9 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-// Default profile picture
-const defaultProfilePicture = '/Picturee.jpg'
-
 // Simulated user data
 const user = ref({
-  profilePicture: '/Picturee.jpg',
+  profilePicture: 'public/Picturee.jpg',
   fullName: 'Jazzmher Osico',
   email: 'jazzkiddo@gmail.com',
   phone: '9123456789',
@@ -15,54 +12,57 @@ const user = ref({
 })
 
 const router = useRouter()
+const fileInput = ref(null)
 
-// Placeholder function for uploading a profile picture
-const uploadProfilePicture = () => {
-  document.getElementById('file-input').click(); // Trigger file input click
-}
-
-// Placeholder function to handle file selection
-const handleFileChange = (event) => {
+const uploadProfilePicture = (event) => {
   const file = event.target.files[0]
   if (file) {
     const reader = new FileReader()
-    reader.onload = () => {
-      user.value.profilePicture = reader.result // Set the uploaded image as the profile picture
+    reader.onload = (e) => {
+      user.value.profilePicture = e.target.result
     }
     reader.readAsDataURL(file)
   }
 }
 
-// Navigate to the Edit Profile page
+const triggerFileInput = () => {
+  fileInput.value.click()
+}
+
 const editProfile = () => {
   router.push('/edit-profile')
+}
+
+const goBack = () => {
+  router.back()
 }
 </script>
 
 <template>
-  <v-app class="main-page">
-    <!-- Top Navbar with Logo and Back Button -->
-    <v-app-bar color="green-darken-3" class="px-3">
-      <div class="d-flex align-center">
-        <!-- Back Button -->
-        <v-btn icon @click="router.back()" class="mr-2">
-          <v-icon color="white">mdi-arrow-left</v-icon>
-        </v-btn>
+  <v-app>
+    <!-- Navbar -->
+    <v-app-bar color="green-darken-3" class="px-4" flat>
+      <v-btn icon @click="goBack" class="me-2" variant="text">
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
 
-        <!-- Logo -->
+      <!-- Logo + Title wrapper -->
+      <div class="d-flex align-center">
         <v-img
-          src="/PUROK-KONEK-LOGO-removebg-preview.png"
+          src="public/PUROK-KONEK-LOGO-removebg-preview.png"
           alt="Purok-Konek Logo"
           width="40"
           height="40"
-          class="mr-2"
+          class="me-2"
+          contain
         ></v-img>
-        <h2 class="mb-0 text-white">PUROK-KONEK</h2>
+        <h2 class="text-white font-weight-bold mb-0">PUROK-KONEK</h2>
       </div>
+
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <!-- Main Content -->
+    <!-- Profile Content -->
     <v-main>
       <div class="my-profile">
         <v-container class="py-10">
@@ -70,37 +70,27 @@ const editProfile = () => {
             <v-col cols="12" md="8" lg="6">
               <v-card elevation="4" class="profile-card">
                 <v-card-title class="text-h5 text-center">My Profile</v-card-title>
-                
-                <!-- Profile Picture -->
-                <div class="text-center mb-4">
+
+                <div class="text-center my-4">
                   <v-avatar size="120" class="mx-auto">
-                    <v-img :src="user.profilePicture" alt="Profile Picture"></v-img>
+                    <v-img :src="user.profilePicture" alt="Profile Picture" />
                   </v-avatar>
                 </div>
 
+                <div class="text-center mb-4">
+                  <v-btn small color="primary" @click="triggerFileInput">
+                    Change Picture
+                  </v-btn>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref="fileInput"
+                    style="display: none"
+                    @change="uploadProfilePicture"
+                  />
+                </div>
+
                 <v-card-text>
-                  <div class="avatar-container text-center mb-4">
-                    <!-- Change Picture Button -->
-                    <v-btn
-                      small
-                      color="primary"
-                      class="change-picture-btn"
-                      @click="uploadProfilePicture"
-                    >
-                      Change Picture
-                    </v-btn>
-
-                    <!-- Hidden File Input -->
-                    <input
-                      type="file"
-                      id="file-input"
-                      style="display: none"
-                      @change="handleFileChange"
-                      accept="image/*"
-                    />
-                  </div>
-
-                  <!-- Profile Information -->
                   <v-list dense>
                     <v-list-item>
                       <v-list-item-title><strong>Full Name:</strong> {{ user.fullName }}</v-list-item-title>
@@ -116,7 +106,6 @@ const editProfile = () => {
                     </v-list-item>
                   </v-list>
 
-                  <!-- Edit Profile Button -->
                   <v-card-actions class="justify-center">
                     <v-btn color="green-darken-2" @click="editProfile">
                       Edit Profile
@@ -134,15 +123,11 @@ const editProfile = () => {
 
 <style scoped>
 .my-profile {
-  background-color: var(--background-color, #f0f4f8);
-  background-image: url('/154085550_s.jpg');
+  background-image: url('public/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 20px;
 }
 
@@ -152,25 +137,21 @@ const editProfile = () => {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.avatar-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.text-center {
+  text-align: center;
 }
 
-.change-picture-btn {
-  margin-top: 8px;
-  font-size: 12px;
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.main-page {
-  background-color: #fff;
-  background-image: url('/154085550_s.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  min-height: 100vh;
+.mb-4 {
+  margin-bottom: 16px;
+}
+
+.my-4 {
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 </style>
