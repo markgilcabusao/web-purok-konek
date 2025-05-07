@@ -34,7 +34,7 @@ const saveChanges = () => {
   userStore.updateProfile(form.value)
 
   alert('Profile updated successfully!')
-  router.push('/my-profile')
+  router.push('/main')
 }
 </script>
 

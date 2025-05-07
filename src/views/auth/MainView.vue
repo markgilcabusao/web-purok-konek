@@ -200,7 +200,7 @@ function handleLogout() {
       </section>
 
       <section class="features">
-        <br><hr><br><br>
+        <br><br><br>
         <h1>Our Features</h1>
         <br>
         <div class="feature-cards">
