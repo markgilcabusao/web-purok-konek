@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router' // Import useRouter to access Vue Router
+import { useRouter } from 'vue-router' 
 
 // Simulated appointment data
 const appointments = ref([
