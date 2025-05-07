@@ -1,34 +1,76 @@
 <script setup>
+
+import { supabase } from '@/utils/supabase.js'
 import { ref } from 'vue'
+import { requiredValidator, emailValidator } from '@/utils/validator'
+import { useRouter } from 'vue-router'
 
-const theme = ref('light')
+// Router instance
+const router = useRouter()
 
-const date = ref('');
-const time = ref('');
-const submitted = ref(false);
+// Form data
+const date = ref('')
+const time = ref('')
+const submitted = ref(false)
+const loading = ref(false)
+const errorMessage = ref('')
 
-const submitAppointment = () => {
-  submitted.value = true 
+// Validation rules
+const requiredRule = (value) => !!value || 'This field is required.'
+
+// Submit appointment to Supabase
+const submitAppointment = async () => {
+  loading.value = true
+  errorMessage.value = ''
+
+  try {
+    const { data, error } = await supabase
+      .from('appointments')
+      .insert([
+        {
+          date: date.value,
+          time: time.value,
+        },
+      ])
+
+    if (error) {
+      throw error
+    }
+
+    submitted.value = true
+  } catch (error) {
+    errorMessage.value = error.message
+  } finally {
+    loading.value = false
+  }
+}
+
+// Navigate to the main page
+const goToMain = () => {
+  router.push('/main')
 }
 </script>
 
 <template>
   <v-responsive>
-    <v-app :theme="theme" class="main-page">
+    <v-app class="main-page">
       <!-- Top Bar -->
       <v-app-bar color="green-darken-3" class="px-3">
-  <div class="d-flex align-center">
-    <v-img
-      src="public/PUROK-KONEK-LOGO-removebg-preview.png"
-      alt="Purok-Konek Logo"
-      width="40"
-      height="40"
-      class="mr-2"
-    ></v-img>
-    <h2 class="mb-0 text-white">PUROK-KONEK</h2>
-  </div>
-  <v-spacer></v-spacer>
-</v-app-bar>
+        <v-btn icon @click="$router.back()" class="me-2" variant="text">
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+        <div class="d-flex align-center">
+          <v-img
+            src="public/PUROK-KONEK-LOGO-removebg-preview.png"
+            alt="Purok-Konek Logo"
+            width="40"
+            height="40"
+            class="mr-2"
+          ></v-img>
+          <h2 class="mb-0 text-white">PUROK-KONEK</h2>
+        </div>
+        <v-spacer></v-spacer>
+      </v-app-bar>
 
       <!-- Main Content -->
       <div class="background">
@@ -45,7 +87,15 @@ const submitAppointment = () => {
                 <label for="time">Time:</label>
                 <input type="time" id="time" v-model="time" required />
               </div>
-              <v-btn type="submit" color="green-darken-3" class="text-white">Make an Appointment</v-btn>
+              <v-btn
+                type="submit"
+                color="green-darken-3"
+                class="text-white"
+                :loading="loading"
+              >
+                Make an Appointment
+              </v-btn>
+              <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
             </form>
           </template>
 
@@ -59,10 +109,10 @@ const submitAppointment = () => {
                 Thank you for submitting your form. We appreciate your time and effort in providing the necessary information.
               </p>
               <v-btn color="green-darken-3" class="white--text">
-      <router-link to="/main" class="text-decoration-none text-white">
-        <h5 class="text-center">Back to Homepage</h5>
-       </router-link>
-          </v-btn>
+                <router-link to="/main" class="text-decoration-none text-white">
+                  <h5 class="text-center">Back to Homepage</h5>
+                </router-link>
+              </v-btn>
             </div>
           </template>
         </div>
@@ -91,7 +141,6 @@ const submitAppointment = () => {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Style for the main content container */
 .background {
   background-color: inherit;
   height: 100vh;
@@ -100,9 +149,8 @@ const submitAppointment = () => {
   align-items: center;
 }
 
-/* Content box styling */
 .content {
-  background: rgba(255, 255, 255, 0.8); /* Slight opacity for background */
+  background: rgba(255, 255, 255, 0.8);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -110,7 +158,6 @@ const submitAppointment = () => {
   max-width: 400px;
 }
 
-/* Success message box styling */
 .success-message {
   text-align: center;
   padding: 20px;
@@ -168,13 +215,12 @@ input {
   color: var(--text-color-light);
 }
 
-/* Background and theme colors */
 .main-page {
   color: var(--text-color);
   background-color: var(--background-color);
   text-align: center;
   padding: 20px;
-  background-image: url('public/154085550_s.jpg'); /* Path to the image in the public folder */
+  background-image: url('public/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -182,7 +228,6 @@ input {
   transition: background-color 0.3s ease;
 }
 
-/* Dark Mode styling */
 .main-page[data-theme="dark"] {
   background-color: var(--background-color-dark);
   color: var(--text-color-dark);
