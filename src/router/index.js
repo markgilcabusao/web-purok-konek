@@ -8,6 +8,7 @@
   import MyprofileView from '@/views/auth/MyprofileView.vue'
   import AppointmentOverview from '@/views/auth/AppointmentOverview.vue'
   import PendingRequest from '@/views/auth/PendingRequest.vue'
+  import EditProfile from '@/views/auth/EditProfile.vue'
 
   const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +57,11 @@
         path: '/pending-requests',
         name: 'pending-requests',
         component: PendingRequest,
+      },
+      {
+        path: '/edit-profile',
+        name: 'edit-profile',
+        component: EditProfile,
       }
     ],
   })
