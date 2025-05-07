@@ -10,6 +10,7 @@
   import PendingRequest from '@/views/auth/PendingRequest.vue'
   import EditProfile from '@/views/auth/EditProfile.vue'
   import AppointmentDetails from '@/views/auth/AppointmentDetails.vue'
+  import RequestDetails from '@/views/auth/RequestDetails.vue'
 
   const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -68,6 +69,11 @@
         path: '/appointment-details/:id',
         name: 'appointment-details',
         component: AppointmentDetails,
+      },
+      {
+        path: '/request-details/:id',
+        name: 'request-details',
+        component: RequestDetails,
       }
     ],
   })
