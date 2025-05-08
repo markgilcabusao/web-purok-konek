@@ -1,26 +1,36 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { supabase } from '@/utils/supabase.js'
 
-const pendingRequests = ref([
-  { id: 1, title: 'Barangay Clearance Request', date: '2025-05-01' },
-  { id: 2, title: 'Business Permit Application', date: '2025-05-03' },
-])
-
+const pendingRequests = ref([])
 const router = useRouter()
 const goBack = () => router.back()
 const viewDetails = (id) => router.push({ name: 'request-details', params: { id } })
+
+const fetchRequests = async () => {
+  const { data, error } = await supabase
+    .from('requests') // Use your actual table name
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching requests:', error)
+  } else {
+    pendingRequests.value = data
+  }
+}
+
+onMounted(fetchRequests)
 </script>
 
 <template>
   <v-app>
-    <!-- Fixed App Bar -->
     <v-app-bar color="green-darken-3" flat app class="px-4">
       <div class="d-flex align-center">
         <v-btn icon @click="goBack" class="me-2" variant="text">
           <v-icon color="white">mdi-arrow-left</v-icon>
         </v-btn>
-
         <v-img
           src="/images/PUROK-KONEK-LOGO-removebg-preview.png"
           alt="Logo"
@@ -29,12 +39,10 @@ const viewDetails = (id) => router.push({ name: 'request-details', params: { id 
           class="me-2"
           contain
         />
-
         <h2 class="text-white mb-0">PUROK-KONEK</h2>
       </div>
     </v-app-bar>
 
-    <!-- Main Content -->
     <v-main class="main-page d-flex justify-center align-center">
       <v-container>
         <v-row justify="center">
@@ -49,10 +57,11 @@ const viewDetails = (id) => router.push({ name: 'request-details', params: { id 
                   >
                     <v-list-item-content>
                       <v-list-item-title>
-                        <strong>{{ request.title }}</strong>
+                        <strong>{{ request.request_type }}</strong>
                       </v-list-item-title>
                       <v-list-item-subtitle>
-                        Submitted on: {{ request.date }}
+                        Name: {{ request.name }}<br />
+                        Submitted on: {{ new Date(request.created_at).toLocaleString() }}
                       </v-list-item-subtitle>
                     </v-list-item-content>
                     <v-list-item-action>
@@ -78,15 +87,13 @@ const viewDetails = (id) => router.push({ name: 'request-details', params: { id 
   background-position: center;
   background-attachment: fixed;
   min-height: 100vh;
-  padding-top: 64px; /* Offset for fixed navbar */
+  padding-top: 64px;
 }
-
 .overview-card {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .v-app-bar {
   position: fixed;
   top: 0;
