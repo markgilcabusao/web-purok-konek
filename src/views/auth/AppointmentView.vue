@@ -61,7 +61,7 @@ const goToMain = () => {
         </v-btn>
         <div class="d-flex align-center">
           <v-img
-            src="/images/PUROK-KONEK-LOGO-removebg-preview.png"
+            src="public/PUROK-KONEK-LOGO-removebg-preview.png"
             alt="Purok-Konek Logo"
             width="40"
             height="40"

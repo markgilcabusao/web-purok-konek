@@ -16,6 +16,11 @@ const submitted = ref(false)
 const loading = ref(false)
 const form = ref(null)
 
+// Alert state
+const showAlert = ref(false)
+const alertMessage = ref('')
+const alertType = ref('error') // 'error', 'success', etc.
+
 const requestTypes = [
   'Barangay Clearance',
   'Residency Certificate',
@@ -57,12 +62,19 @@ const getUser = async () => {
   phone.value = metadata.phone || ''
 }
 
-// Submit request to Supabase
+// Submit request to Supabase with form validation
 const submitRequest = async () => {
-  const isValid = await form.value?.validate()
-  if (!isValid) return
+  const result = await form.value?.validate()
+
+  if (!result?.valid) {
+    alertMessage.value = 'Please fill out all required fields before submitting.'
+    alertType.value = 'error'
+    showAlert.value = true
+    return
+  }
 
   loading.value = true
+  showAlert.value = false
 
   try {
     const { data, error } = await supabase
@@ -72,11 +84,13 @@ const submitRequest = async () => {
         email: email.value,
         phone: phone.value,
         request_type: requestType.value,
+        comment: comment.value
       }])
 
     if (error) {
-      alert(`Supabase error: ${error.message}`)
-      console.error('Error submitting request:', error.message)
+      alertMessage.value = `Supabase error: ${error.message}`
+      alertType.value = 'error'
+      showAlert.value = true
       return
     }
 
@@ -84,6 +98,9 @@ const submitRequest = async () => {
     submitted.value = true
   } catch (err) {
     console.error('Unexpected error:', err)
+    alertMessage.value = 'An unexpected error occurred. Please try again.'
+    alertType.value = 'error'
+    showAlert.value = true
   } finally {
     loading.value = false
   }
@@ -91,7 +108,9 @@ const submitRequest = async () => {
 
 // Navigate to appointment page after submission
 const goToAppointment = () => {
-  router.push('/appointment')
+  if (submitted.value) {
+    router.push('/appointment')
+  }
 }
 
 // Fetch user data on component mount
@@ -112,6 +131,20 @@ getUser()
 
                 <v-card-text class="pt-4">
                   <div v-if="!submitted">
+                    <!-- Alert for errors -->
+                    <v-alert
+                      v-if="showAlert"
+                      :type="alertType"
+                      variant="tonal"
+                      closable
+                      color="error"
+                      class="mb-4"
+                      @click:close="showAlert = false"
+                    >
+                      <v-icon start icon="mdi-alert-circle" class="mr-2" />
+                      <strong>Ooops!</strong> {{ alertMessage }}
+                    </v-alert>
+
                     <v-form ref="form" @submit.prevent="submitRequest">
                       <!-- Personal Information -->
                       <h3 class="text-subtitle-1 mb-3">Personal Information</h3>
@@ -121,7 +154,6 @@ getUser()
                             v-model="name"
                             label="Full Name"
                             variant="outlined"
-                            required
                             :rules="[requiredRule]"
                             @input="formatFullName"
                           ></v-text-field>
@@ -132,7 +164,6 @@ getUser()
                             v-model="email"
                             label="Email"
                             variant="outlined"
-                            required
                             :rules="[requiredRule, emailRule]"
                           ></v-text-field>
                         </v-col>
@@ -144,7 +175,6 @@ getUser()
                             type="text"
                             prefix="+63"
                             variant="outlined"
-                            required
                             :rules="[requiredRule, phoneRule]"
                             maxlength="10"
                             placeholder="9XXXXXXXXX"
@@ -161,7 +191,6 @@ getUser()
                         :items="requestTypes"
                         label="Select Request Type"
                         variant="outlined"
-                        required
                         :rules="[v => !!v || 'Request type is required']"
                         class="mb-4"
                       ></v-select>
@@ -219,7 +248,7 @@ getUser()
   color: var(--text-color);
   background-color: var(--background-color);
   padding: 20px;
-  background-image: url('/images/154085550_s.jpg');
+  background-image: url('public/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

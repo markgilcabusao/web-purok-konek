@@ -74,7 +74,7 @@ const viewDetails = (id) => router.push({ name: 'request-details', params: { id 
 
 <style scoped>
 .main-page {
-  background-image: url('/public/154085550_s.jpg');
+  background-image: url('/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

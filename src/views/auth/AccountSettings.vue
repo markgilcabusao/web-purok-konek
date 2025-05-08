@@ -1,33 +1,44 @@
 <script setup>
-
-import { createRouter, createWebHistory } from 'vue-router'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-
+import { useAccountStore } from '@/stores/account'
 
 const router = useRouter()
+const store = useAccountStore()
 
-// Simulated user data
 const form = ref({
-  fullName: 'Jazzmher Osico',
-  email: 'jazzkiddo@gmail.com',
-  password: '' // Add password field
+  fullName: store.fullName,
+  email: store.email,
+  profilePicture: store.profilePicture
 })
 
 const formRef = ref(null)
-const isPasswordVisible = ref(false) // Reactive variable to toggle password visibility
+const profilePicturePreview = ref(store.profilePicture || '')
 
 const rules = {
   required: (v) => !!v || 'This field is required',
   email: (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
 }
 
+function handlePictureChange(event) {
+  const file = event.target.files[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = () => {
+      profilePicturePreview.value = reader.result
+      form.value.profilePicture = reader.result
+    }
+    reader.readAsDataURL(file)
+  }
+}
 
-function saveChanges() {
-  if (formRef.value?.validate()) {
-    console.log('Saved:', form.value)
-    alert('Changes saved successfully!')
-    router.push('/main') // Redirect to homepage or another route
+async function saveChanges() {
+  const valid = await formRef.value?.validate()
+  if (valid) {
+    store.updateAccount(form.value)
+    router.push('/main')
+  } else {
+    alert('Please fix the validation errors.')
   }
 }
 </script>
@@ -39,7 +50,25 @@ function saveChanges() {
         <span class="text-h5">Account Settings</span>
       </v-card-title>
       <v-card-text>
-        <v-form @submit.prevent="saveChanges" ref="formRef" lazy-validation>
+        <v-form ref="formRef" lazy-validation>
+          <div class="profile-picture-section">
+            <img
+              :src="profilePicturePreview || 'https://via.placeholder.com/150'"
+              alt="Profile Picture"
+              class="profile-picture-preview"
+            />
+            <v-btn color="blue" class="mt-2" @click="$refs.fileInput.click()">
+              Change Picture
+            </v-btn>
+            <input
+              type="file"
+              ref="fileInput"
+              class="hidden"
+              accept="image/*"
+              @change="handlePictureChange"
+            />
+          </div>
+
           <v-text-field
             v-model="form.fullName"
             label="Full Name"
@@ -56,7 +85,7 @@ function saveChanges() {
             dense
           ></v-text-field>
 
-          <v-btn color="green-darken-2" class="mt-4" type="submit">
+          <v-btn color="green-darken-2" class="mt-4" @click="saveChanges">
             Save Changes
           </v-btn>
         </v-form>
@@ -68,24 +97,43 @@ function saveChanges() {
 <style scoped>
 .account-settings {
   background-color: var(--background-color, #f0f4f8);
-  background-image: url('/images/154085550_s.jpg'); /* Add the background image */
-  background-size: cover; /* Ensure the image covers the entire background */
-  background-position: center; /* Center the image */
-  background-attachment: fixed; /* Make the background fixed */
-  min-height: 100vh; /* Ensure the background covers the full height of the viewport */
-  width: 100%; /* Ensure the background covers the full width of the viewport */
-  display: flex; /* Use flexbox to center the content */
-  justify-content: center; /* Horizontally center the content */
-  align-items: center; /* Vertically center the content */
-  padding: 20px; /* Add some padding for spacing */
+  background-image: url('public/154085550_s.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 .account-card {
-  background-color: white; /* Set the card background to plain white */
-  border-radius: 8px; /* Add rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-  max-width: 600px; /* Limit the card width */
-  width: 100%; /* Make the card responsive */
-  padding: 20px; /* Add padding inside the card */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+}
+
+.profile-picture-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-picture-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+.hidden {
+  display: none;
 }
 </style>
