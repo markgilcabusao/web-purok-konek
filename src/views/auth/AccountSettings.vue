@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAccountStore } from '@/stores/account'
 
@@ -47,44 +47,22 @@ async function saveChanges() {
 
 <template>
   <v-app>
-    <!-- Navigation Drawer -->
-    <v-navigation-drawer app>
-      <v-list>
-        <v-list-item @click="router.push('/main')">
-          <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Home</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="router.push('/profile')">
-          <v-list-item-icon>
-            <v-icon>mdi-account</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Profile</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="router.push('/settings')">
-          <v-list-item-icon>
-            <v-icon>mdi-cog</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Settings</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
     <!-- Top App Bar -->
-    <v-app-bar color="green-darken-3" flat app class="px-4">
-      <v-btn icon @click="goBack" variant="text" class="me-2">
+    <v-app-bar color="green-darken-3" class="px-4" flat>
+      <v-btn icon @click="goBack" class="me-2" variant="text">
         <v-icon color="white">mdi-arrow-left</v-icon>
       </v-btn>
-      <v-img
-        src="/PUROK-KONEK-LOGO-removebg-preview.png"
-        alt="Logo"
-        width="40"
-        height="40"
-        class="me-2"
-        contain
-      />
-      <h2 class="text-white mb-0">PUROK-KONEK</h2>
+      <div class="d-flex align-center">
+        <v-img
+          src="images/PUROK-KONEK-LOGO-removebg-preview.png"
+          alt="Logo"
+          width="40"
+          height="40"
+          class="me-2"
+        />
+        <h2 class="text-white font-weight-bold mb-0">PUROK-KONEK</h2>
+      </div>
+      <v-spacer></v-spacer>
     </v-app-bar>
 
     <!-- Main content -->
@@ -141,7 +119,7 @@ async function saveChanges() {
 
 <style scoped>
 .account-settings {
-  background-image: url('/154085550_s.jpg');
+  background-image: url('images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
