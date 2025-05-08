@@ -220,7 +220,7 @@ input {
   background-color: var(--background-color);
   text-align: center;
   padding: 20px;
-  background-image: url('public/images/154085550_s.jpg');
+  background-image: url('/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
