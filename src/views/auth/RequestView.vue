@@ -248,7 +248,7 @@ getUser()
   color: var(--text-color);
   background-color: var(--background-color);
   padding: 20px;
-  background-image: url('public/154085550_s.jpg');
+  background-image: url('public/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

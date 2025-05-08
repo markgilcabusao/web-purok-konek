@@ -6,6 +6,8 @@ import { useAccountStore } from '@/stores/account'
 const router = useRouter()
 const store = useAccountStore()
 
+const goBack = () => router.back()
+
 const form = ref({
   fullName: store.fullName,
   email: store.email,
@@ -44,60 +46,102 @@ async function saveChanges() {
 </script>
 
 <template>
-  <div class="account-settings">
-    <v-card class="account-card">
-      <v-card-title>
-        <span class="text-h5">Account Settings</span>
-      </v-card-title>
-      <v-card-text>
-        <v-form ref="formRef" lazy-validation>
-          <div class="profile-picture-section">
-            <img
-              :src="profilePicturePreview || 'https://via.placeholder.com/150'"
-              alt="Profile Picture"
-              class="profile-picture-preview"
+  <v-app>
+    <!-- Navigation Drawer -->
+    <v-navigation-drawer app>
+      <v-list>
+        <v-list-item @click="router.push('/main')">
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="router.push('/profile')">
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Profile</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="router.push('/settings')">
+          <v-list-item-icon>
+            <v-icon>mdi-cog</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Settings</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <!-- Top App Bar -->
+    <v-app-bar color="green-darken-3" flat app class="px-4">
+      <v-btn icon @click="goBack" variant="text" class="me-2">
+        <v-icon color="white">mdi-arrow-left</v-icon>
+      </v-btn>
+      <v-img
+        src="/PUROK-KONEK-LOGO-removebg-preview.png"
+        alt="Logo"
+        width="40"
+        height="40"
+        class="me-2"
+        contain
+      />
+      <h2 class="text-white mb-0">PUROK-KONEK</h2>
+    </v-app-bar>
+
+    <!-- Main content -->
+    <v-main class="account-settings">
+      <v-card class="account-card">
+        <v-card-title>
+          <span class="text-h5">Account Settings</span>
+        </v-card-title>
+        <v-card-text>
+          <v-form ref="formRef" lazy-validation>
+            <div class="profile-picture-section">
+              <img
+                :src="profilePicturePreview || 'https://via.placeholder.com/150'"
+                alt="Profile Picture"
+                class="profile-picture-preview"
+              />
+              <v-btn color="blue" class="mt-2" @click="$refs.fileInput.click()">
+                Change Picture
+              </v-btn>
+              <input
+                type="file"
+                ref="fileInput"
+                class="hidden"
+                accept="image/*"
+                @change="handlePictureChange"
+              />
+            </div>
+
+            <v-text-field
+              v-model="form.fullName"
+              label="Full Name"
+              :rules="[rules.required]"
+              outlined
+              dense
             />
-            <v-btn color="blue" class="mt-2" @click="$refs.fileInput.click()">
-              Change Picture
+
+            <v-text-field
+              v-model="form.email"
+              label="Email"
+              :rules="[rules.required, rules.email]"
+              outlined
+              dense
+            />
+
+            <v-btn color="green-darken-2" class="mt-4" @click="saveChanges">
+              Save Changes
             </v-btn>
-            <input
-              type="file"
-              ref="fileInput"
-              class="hidden"
-              accept="image/*"
-              @change="handlePictureChange"
-            />
-          </div>
-
-          <v-text-field
-            v-model="form.fullName"
-            label="Full Name"
-            :rules="[rules.required]"
-            outlined
-            dense
-          ></v-text-field>
-
-          <v-text-field
-            v-model="form.email"
-            label="Email"
-            :rules="[rules.required, rules.email]"
-            outlined
-            dense
-          ></v-text-field>
-
-          <v-btn color="green-darken-2" class="mt-4" @click="saveChanges">
-            Save Changes
-          </v-btn>
-        </v-form>
-      </v-card-text>
-    </v-card>
-  </div>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-main>
+  </v-app>
 </template>
 
 <style scoped>
 .account-settings {
-  background-color: var(--background-color, #f0f4f8);
-  background-image: url('public/154085550_s.jpg');
+  background-image: url('/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -106,7 +150,7 @@ async function saveChanges() {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 100px 20px 20px;
 }
 
 .account-card {
@@ -135,5 +179,13 @@ async function saveChanges() {
 
 .hidden {
   display: none;
+}
+
+.v-app-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
 }
 </style>

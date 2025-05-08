@@ -178,7 +178,7 @@ const onFormSubmit = () => {
 .main-page {
   color: #fff;
   background-color: #fff;
-  background-image: url('/images/154085550_s.jpg');
+  background-image: url('public/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* Keeps the image fixed when scrolling */

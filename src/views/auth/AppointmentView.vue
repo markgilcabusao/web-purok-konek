@@ -61,7 +61,7 @@ const goToMain = () => {
         </v-btn>
         <div class="d-flex align-center">
           <v-img
-            src="public/PUROK-KONEK-LOGO-removebg-preview.png"
+            src="public/images/PUROK-KONEK-LOGO-removebg-preview.png"
             alt="Purok-Konek Logo"
             width="40"
             height="40"
@@ -220,7 +220,7 @@ input {
   background-color: var(--background-color);
   text-align: center;
   padding: 20px;
-  background-image: url('public/154085550_s.jpg');
+  background-image: url('public/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

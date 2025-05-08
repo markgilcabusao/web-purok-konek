@@ -39,7 +39,7 @@ onMounted(fetchAppointments)
         <v-btn icon @click="goBack" class="me-2" variant="text">
           <v-icon color="white">mdi-arrow-left</v-icon>
         </v-btn>
-        <v-img src="/PUROK-KONEK-LOGO-removebg-preview.png" alt="Logo" width="40" height="40" class="me-2" contain />
+        <v-img src="public/images/PUROK-KONEK-LOGO-removebg-preview.png" alt="Logo" width="40" height="40" class="me-2" contain />
         <h2 class="text-white mb-0">PUROK-KONEK</h2>
       </div>
     </v-app-bar>
@@ -81,7 +81,7 @@ onMounted(fetchAppointments)
 
 <style scoped>
 .main-page {
-  background-image: url('/154085550_s.jpg');
+  background-image: url('public/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

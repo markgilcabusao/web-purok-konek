@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router'
 const pendingRequests = ref([
   { id: 1, title: 'Barangay Clearance Request', date: '2025-05-01' },
   { id: 2, title: 'Business Permit Application', date: '2025-05-03' },
-  { id: 3, title: 'Indigency Certificate Request', date: '2025-05-05' },
 ])
 
 const router = useRouter()
