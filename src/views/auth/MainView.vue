@@ -104,7 +104,7 @@ function handleLogout() {
         </v-btn>
         <div class="d-flex align-center">
           <v-img
-            src="public/images/PUROK-KONEK-LOGO-removebg-preview.png"
+            src="images/PUROK-KONEK-LOGO-removebg-preview.png"
             alt="Purok-Konek Logo"
             width="40"
             height="40"
@@ -152,7 +152,7 @@ function handleLogout() {
   <template v-slot:activator="{ props }">
     <v-btn icon v-bind="props">
       <v-avatar color="green" size="45">
-        <v-img src="public/images/PictureNekss.jpg" alt="User Picture"></v-img>
+        <v-img src="images/PictureNekss.jpg" alt="User Picture"></v-img>
       </v-avatar>
     </v-btn>
   </template>
@@ -160,7 +160,7 @@ function handleLogout() {
     <v-card-text>
       <div class="mx-auto text-center">
         <v-avatar color="brown" size="100">
-          <v-img src="public/images/PictureNekss.jpg" alt="User Picture"></v-img>
+          <v-img src="images/PictureNekss.jpg" alt="User Picture"></v-img>
         </v-avatar>
         <h3>{{ user.fullName }}</h3>
         <p class="text-caption mt-1">
@@ -186,7 +186,7 @@ function handleLogout() {
       <section class="intro">
         <br><br><br>
         <v-row cols="12" md="6" class="text-center text-md-left">
-          <v-img src="public/images/PUROK-KONEK-LOGO-removebg-preview.png" width="300" height="300"></v-img>
+          <v-img src="images/PUROK-KONEK-LOGO-removebg-preview.png" width="300" height="300"></v-img>
         </v-row>
         <br><br>
         <h1>Welcome to Purok-Konek</h1>
@@ -242,7 +242,7 @@ function handleLogout() {
 .main-page {
   color: var(--text-color);
   background-color: var(--background-color);
-  background-image: url('public/images/154085550_s.jpg'); /* Add the background image */
+  background-image: url('images/154085550_s.jpg'); /* Add the background image */
   background-size: cover; /* Ensure the image covers the entire background */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent the image from repeating */

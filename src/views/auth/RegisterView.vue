@@ -86,7 +86,7 @@ const onFormSubmit = () => {
       <v-app-bar color="green-darken-3" class="px-3">
         <div class="d-flex align-center">
           <v-img
-            src="/images/PUROK-KONEK-LOGO-removebg-preview.png"
+            src="public/images/PUROK-KONEK-LOGO-removebg-preview.png"
             alt="Purok-Konek Logo"
             width="40"
             height="40"
@@ -207,7 +207,7 @@ const onFormSubmit = () => {
   background-color: #fff;
   padding: 20px;
   /* Updated to use relative path from public folder */
-  background-image: url('/images/154085550_s.jpg');
+  background-image: url('public/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* Keeps the image fixed when scrolling */
