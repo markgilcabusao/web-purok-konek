@@ -38,7 +38,7 @@ const goBack = () => {
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <div class="d-flex align-center">
-        <v-img src="images/PUROK-KONEK-LOGO-removebg-preview.png" width="40" height="40" class="me-2"></v-img>
+        <v-img src="/images/PUROK-KONEK-LOGO-removebg-preview.png" width="40" height="40" class="me-2"></v-img>
         <h2 class="text-white font-weight-bold mb-0">PUROK-KONEK</h2>
       </div>
       <v-spacer></v-spacer>
@@ -98,7 +98,7 @@ const goBack = () => {
 
 <style scoped>
 .my-profile {
-  background-image: url('images/154085550_s.jpg');
+  background-image: url('/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

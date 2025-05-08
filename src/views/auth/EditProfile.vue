@@ -46,7 +46,7 @@ const saveChanges = () => {
           <v-btn icon @click="router.back()" class="mr-2">
             <v-icon color="white">mdi-arrow-left</v-icon>
           </v-btn>
-          <v-img src="images/PUROK-KONEK-LOGO-removebg-preview.png" width="40" height="40" class="mr-2"></v-img>
+          <v-img src="/images/PUROK-KONEK-LOGO-removebg-preview.png" width="40" height="40" class="mr-2"></v-img>
           <h2 class="mb-0 text-white">PUROK-KONEK</h2>
         </div>
         <v-spacer></v-spacer>

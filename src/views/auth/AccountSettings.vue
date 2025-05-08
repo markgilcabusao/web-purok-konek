@@ -54,7 +54,7 @@ async function saveChanges() {
       </v-btn>
       <div class="d-flex align-center">
         <v-img
-          src="images/PUROK-KONEK-LOGO-removebg-preview.png"
+          src="/images/PUROK-KONEK-LOGO-removebg-preview.png"
           alt="Logo"
           width="40"
           height="40"
@@ -119,7 +119,7 @@ async function saveChanges() {
 
 <style scoped>
 .account-settings {
-  background-image: url('images/154085550_s.jpg');
+  background-image: url('/images/154085550_s.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
